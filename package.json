@@ -14,8 +14,16 @@
   "contributes": {
     "commands": [
       {
-        "command": "flutter-tidy.helloWorld",
-        "title": "Hello World"
+        "command": "flutter-tidy.find-unused-assets",
+        "title": "Flutter Tidy: Find Unused Assets"
+      },
+      {
+        "command": "flutter-tidy.find-unused-classes",
+        "title": "Flutter Tidy: Find Unused Classes"
+      },
+      {
+        "command": "flutter-tidy.find-unused-dependencies",
+        "title": "Flutter Tidy: Find Unused Dependencies"
       }
     ]
   },
