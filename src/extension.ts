@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { extractAssetsFromPubspec } from './utils/asset/pubspec_asset_parser';
-import { findDirectlyUsedAssets } from './utils/asset/direct_usage_asset_scanner';
+import { findDirectlyUsedAssets } from './utils/asset/asset_reference_finder';
 import { extractStaticAssetReferences } from './utils/asset/static_asset_parser';
 import { findUsedStaticVariables } from './utils/asset/static_usage_tracker';
 
