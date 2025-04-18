@@ -1,26 +1,58 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { extractAssetsFromPubspec } from './utils/asset/pubspec_asset_parser';
+import { findDirectlyUsedAssets } from './utils/asset/direct_usage_asset_scanner';
+import { extractStaticAssetReferences } from './utils/asset/static_asset_parser';
+import { findUsedStaticVariables } from './utils/asset/static_usage_tracker';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+	context.subscriptions.push(
+		vscode.commands.registerCommand('flutter-tidy.find-unused-assets', async () => {
+			const workspacePath = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
+			if (!workspacePath) {
+				vscode.window.showErrorMessage('No workspace folder found!');
+				return;
+			}
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "flutter-tidy" is now active!');
+			const allAssets = extractAssetsFromPubspec(workspacePath);
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('flutter-tidy.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from flutter-tidy!');
-	});
+			const directlyUsedAssets = findDirectlyUsedAssets(workspacePath, allAssets);
 
-	context.subscriptions.push(disposable);
+			const staticReferences = extractStaticAssetReferences(workspacePath);
+
+			const usedStaticVariables = findUsedStaticVariables(workspacePath, staticReferences);
+
+			const indirectlyUsedAssets = staticReferences
+				.filter(ref => usedStaticVariables.has(`${ref.className}.${ref.variableName}`))
+				.map(ref => ref.assetPath);
+
+			const definedButUnusedAssets = staticReferences
+				.filter(ref => !usedStaticVariables.has(`${ref.className}.${ref.variableName}`))
+				.map(ref => ref.assetPath);
+
+			const trulyDirectlyUsedAssets = [...directlyUsedAssets].filter(
+				asset => !definedButUnusedAssets.includes(asset)
+			);
+
+			const usedAssets = new Set([
+				...trulyDirectlyUsedAssets,
+				...indirectlyUsedAssets,
+			]);
+
+			const unusedAssets = allAssets.filter(asset => !usedAssets.has(asset));
+
+			vscode.window.showInformationMessage(
+				`📊 Assets - Total: ${allAssets.length}, Used: ${usedAssets.size}, Unused: ${unusedAssets.length}`
+			);
+		}),
+
+		vscode.commands.registerCommand('flutter-tidy.find-unused-classes', () => {
+			vscode.window.showInformationMessage('Running unused class detection...');
+		}),
+
+		vscode.commands.registerCommand('flutter-tidy.find-unused-dependencies', () => {
+			vscode.window.showInformationMessage('Running unused dependency detection...');
+		}),
+	);
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
