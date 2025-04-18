@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { extractAssetsFromPubspec } from './utils/asset/pubspec_asset_parser';
 import { findDirectlyUsedAssets } from './utils/asset/asset_reference_finder';
-import { extractStaticAssetReferences } from './utils/asset/static_asset_parser';
+import { getStaticAssetReferences } from './utils/asset/static_asset_reference_finder';
 import { findUsedStaticVariables } from './utils/asset/static_usage_tracker';
 
 export function activate(context: vscode.ExtensionContext) {
@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 			const directlyUsedAssets = findDirectlyUsedAssets(workspacePath, allAssets);
 
-			const staticReferences = extractStaticAssetReferences(workspacePath);
+			const staticReferences = getStaticAssetReferences(workspacePath);
 
 			const usedStaticVariables = findUsedStaticVariables(workspacePath, staticReferences);
 
