@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { collectDartFiles } from '../file_utils';
+import { collectDartFiles } from '../../utils/file_utils';
 
 /**
  * Codebase 내에서 직접 사용된 asset 들을 찾는다.
@@ -26,7 +26,7 @@ import { collectDartFiles } from '../file_utils';
  * @param assetPaths 확인할 asset 경로 목록 (pubspec.yaml에서 추출된 경로들)
  * @returns 직접 사용된 asset 경로들의 집합
  */
-export function findDirectlyUsedAssets(workspacePath: string, assetPaths: string[]): Set<string> {
+export function findUsedAssets(workspacePath: string, assetPaths: string[]): Set<string> {
   // lib 디렉토리 전체 경로
   // 예: "/Users/project/lib"
   const libDir = path.join(workspacePath, 'lib');

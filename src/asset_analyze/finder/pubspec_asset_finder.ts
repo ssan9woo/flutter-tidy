@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'yaml';
-import { collectFiles } from '../file_utils';
+import { collectFiles } from '../../utils/file_utils';
 
 /**
  * pubspec.yaml 에 정의된 모든 asset 들을 추출한다.
@@ -17,7 +17,7 @@ import { collectFiles } from '../file_utils';
  * @param workspacePath 프로젝트 루트 디렉토리 경로
  * @returns Flutter 프로젝트에서 사용 가능한 모든 asset 파일의 상대 경로 목록
  */
-export function extractAssetsFromPubspec(workspacePath: string): string[] {
+export function findPubspecAssets(workspacePath: string): string[] {
   // pubspec.yaml 전체 경로 생성
   // 예: "/Users/project/pubspec.yaml"
   const pubspecPath = path.join(workspacePath, 'pubspec.yaml');

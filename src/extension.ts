@@ -1,8 +1,6 @@
 import * as vscode from 'vscode';
-import { extractAssetsFromPubspec } from './utils/asset/pubspec_asset_parser';
-import { findDirectlyUsedAssets } from './utils/asset/asset_reference_finder';
-import { getStaticAssetReferences } from './utils/asset/static_asset_reference_finder';
-import { getUsedStaticVariables } from './utils/asset/static_asset_variable_finder';
+import { displayAssetAnalyzeResult } from './asset_analyze/asset_analyze_output';
+import { analyzeAssetUsage } from './asset_analyze/asset_analyzer';
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
@@ -13,36 +11,13 @@ export function activate(context: vscode.ExtensionContext) {
 				return;
 			}
 
-			const allAssets = extractAssetsFromPubspec(workspacePath);
+			vscode.window.showInformationMessage('Analyzing assets usage...');
 
-			const directlyUsedAssets = findDirectlyUsedAssets(workspacePath, allAssets);
+			const analyzeResult = analyzeAssetUsage(workspacePath);
 
-			const staticReferences = getStaticAssetReferences(workspacePath);
+			displayAssetAnalyzeResult(workspacePath, analyzeResult);
 
-			const usedStaticVariables = getUsedStaticVariables(workspacePath, staticReferences);
-
-			const indirectlyUsedAssets = staticReferences
-				.filter(ref => usedStaticVariables.has(`${ref.className}.${ref.variableName}`))
-				.map(ref => ref.assetPath);
-
-			const definedButUnusedAssets = staticReferences
-				.filter(ref => !usedStaticVariables.has(`${ref.className}.${ref.variableName}`))
-				.map(ref => ref.assetPath);
-
-			const trulyDirectlyUsedAssets = [...directlyUsedAssets].filter(
-				asset => !definedButUnusedAssets.includes(asset)
-			);
-
-			const usedAssets = new Set([
-				...trulyDirectlyUsedAssets,
-				...indirectlyUsedAssets,
-			]);
-
-			const unusedAssets = allAssets.filter(asset => !usedAssets.has(asset));
-
-			vscode.window.showInformationMessage(
-				`📊 Assets - Total: ${allAssets.length}, Used: ${usedAssets.size}, Unused: ${unusedAssets.length}`
-			);
+			vscode.window.showInformationMessage('Asset analysis completed!');
 		}),
 
 		vscode.commands.registerCommand('flutter-tidy.find-unused-classes', () => {

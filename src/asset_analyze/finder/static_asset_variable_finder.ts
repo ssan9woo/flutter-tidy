@@ -1,9 +1,7 @@
-// src/utils/static_variable_usage_tracker.ts
-
 import * as fs from 'fs';
 import * as path from 'path';
 import { StaticAssetReference } from './static_asset_reference_finder';
-import { collectDartFiles } from '../file_utils';
+import { collectDartFiles } from '../../utils/file_utils';
 
 /**
  * 정적 에셋 참조가 실제로 다른 파일에서 사용되는지 확인한다.
@@ -31,7 +29,7 @@ import { collectDartFiles } from '../file_utils';
  * @param references static_asset_reference_finder에서 찾은 정적 에셋 참조들
  * @returns 실제 사용 중인 변수들의 집합 (형식: "className.variableName")
  */
-export function getUsedStaticVariables(
+export function findStaticAssetVariables(
   workspacePath: string,
   references: StaticAssetReference[]
 ): Set<string> {
@@ -45,7 +43,7 @@ export function getUsedStaticVariables(
   for (const ref of references) {
     const key = `${ref.className}.${ref.variableName}`;
     // reference 에 대해 정의된 파일을 찾는다.
-    const definingFile = getDefinedFileOfStaticVariable(dartFiles, ref.className, ref.variableName);
+    const definingFile = findDefinedFileOfStaticVariable(dartFiles, ref.className, ref.variableName);
 
     if (definingFile) {
       definitionMap.set(key, definingFile);
@@ -87,7 +85,7 @@ export function getUsedStaticVariables(
  * @param variableName 찾을 변수 이름
  * @returns 변수가 정의된 파일 경로 또는 null
  */
-function getDefinedFileOfStaticVariable(
+function findDefinedFileOfStaticVariable(
   files: string[],
   className: string,
   variableName: string

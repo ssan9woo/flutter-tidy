@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { collectDartFiles } from '../file_utils';
+import { collectDartFiles } from '../../utils/file_utils';
 
 /**
  * Dart 클래스 내의 정적 에셋 참조 정보
@@ -53,7 +53,7 @@ export interface StaticAssetReference {
  * @param workspacePath 프로젝트 루트 디렉토리 경로
  * @returns 발견된 모든 정적 에셋 참조 정보 배열
  */
-export function getStaticAssetReferences(workspacePath: string): StaticAssetReference[] {
+export function findStaticAssetReferences(workspacePath: string): StaticAssetReference[] {
   const libDir = path.join(workspacePath, 'lib');
   const dartFiles = collectDartFiles(libDir);
   const references: StaticAssetReference[] = [];
