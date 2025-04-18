@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { extractAssetsFromPubspec } from './utils/asset/pubspec_asset_parser';
 import { findDirectlyUsedAssets } from './utils/asset/asset_reference_finder';
 import { getStaticAssetReferences } from './utils/asset/static_asset_reference_finder';
-import { findUsedStaticVariables } from './utils/asset/static_usage_tracker';
+import { getUsedStaticVariables } from './utils/asset/static_asset_variable_finder';
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
@@ -19,7 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 			const staticReferences = getStaticAssetReferences(workspacePath);
 
-			const usedStaticVariables = findUsedStaticVariables(workspacePath, staticReferences);
+			const usedStaticVariables = getUsedStaticVariables(workspacePath, staticReferences);
 
 			const indirectlyUsedAssets = staticReferences
 				.filter(ref => usedStaticVariables.has(`${ref.className}.${ref.variableName}`))
