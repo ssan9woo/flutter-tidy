@@ -1,6 +1,8 @@
 import * as vscode from 'vscode';
 import { displayAssetAnalyzeResult } from './asset_analyze/asset_analyze_output';
 import { analyzeAssetUsage } from './asset_analyze/asset_analyzer';
+import { analyzePackageUsage } from './package_analyze/package_analyzer';
+import { displayPackageAnalyzeResult } from './package_analyze/package_analyze_output';
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
@@ -25,7 +27,19 @@ export function activate(context: vscode.ExtensionContext) {
 		}),
 
 		vscode.commands.registerCommand('flutter-tidy.find-unused-dependencies', () => {
-			vscode.window.showInformationMessage('Running unused dependency detection...');
+			const workspacePath = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
+			if (!workspacePath) {
+				vscode.window.showErrorMessage('No workspace folder found!');
+				return;
+			}
+
+			vscode.window.showInformationMessage('Analyzing package dependencies...');
+
+			const analyzeResult = analyzePackageUsage(workspacePath);
+
+			displayPackageAnalyzeResult(workspacePath, analyzeResult);
+
+			vscode.window.showInformationMessage('Dependency analysis completed!');
 		}),
 	);
 }
