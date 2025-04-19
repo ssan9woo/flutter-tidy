@@ -59,7 +59,9 @@ export function findStaticAssetVariables(
       const definingFile = definitionMap.get(key);
 
       // 정의된 파일이 없거나, 정의된 파일 내부라면 스킵
-      if (!definingFile || file === definingFile) continue;
+      if (!definingFile || file === definingFile) {
+        continue;
+      }
 
       // className.variableName 형태로 사용되는지 확인
       if (content.includes(key)) {
