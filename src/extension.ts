@@ -3,6 +3,8 @@ import { displayAssetAnalyzeResult } from './asset_analyze/asset_analyze_output'
 import { analyzeAssetUsage } from './asset_analyze/asset_analyzer';
 import { analyzePackageUsage } from './package_analyze/package_analyzer';
 import { displayPackageAnalyzeResult } from './package_analyze/package_analyze_output';
+import { analyzeFileUsage } from './file_analyze/file_analyzer';
+import { displayFileAnalyzeResult } from './file_analyze/file_analyze_output';
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
@@ -40,6 +42,22 @@ export function activate(context: vscode.ExtensionContext) {
 			displayPackageAnalyzeResult(workspacePath, analyzeResult);
 
 			vscode.window.showInformationMessage('Dependency analysis completed!');
+		}),
+
+		vscode.commands.registerCommand('flutter-tidy.find-unused-files', () => {
+			const workspacePath = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
+			if (!workspacePath) {
+				vscode.window.showErrorMessage('No workspace folder found!');
+				return;
+			}
+
+			vscode.window.showInformationMessage('Analyzing file usage...');
+
+			const analyzeResult = analyzeFileUsage(workspacePath);
+
+			displayFileAnalyzeResult(workspacePath, analyzeResult);
+
+			vscode.window.showInformationMessage('File analysis completed!');
 		}),
 	);
 }
