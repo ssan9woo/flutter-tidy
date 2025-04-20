@@ -23,7 +23,7 @@ export function analyzeAssetUsage(workspacePath: string): AssetAnalyzeResult {
     const allAssets = findPubspecAssets(workspacePath);
 
     // 2. 사용중인 에셋 분석
-    const usedAssets = getUsedAssets(workspacePath, allAssets);
+    const usedAssets = findUsedAssets(workspacePath, allAssets);
 
     // 3. 미사용 에셋 계산
     const unusedAssets = allAssets.filter(asset => !usedAssets.has(asset));
@@ -43,7 +43,7 @@ export function analyzeAssetUsage(workspacePath: string): AssetAnalyzeResult {
  * @param allAssets 프로젝트의 모든 에셋 목록
  * @returns 사용중인 에셋 집합
  */
-function getUsedAssets(workspacePath: string, allAssets: string[]): Set<string> {
+function findUsedAssets(workspacePath: string, allAssets: string[]): Set<string> {
     // 1. 직접 참조 분석 (예: Image.asset('assets/images/logo.png'))
     const directlyUsedAssets = findAssetsInStringLiterals(workspacePath, allAssets);
 
@@ -51,7 +51,7 @@ function getUsedAssets(workspacePath: string, allAssets: string[]): Set<string> 
     const {
         usedStaticAssets,
         unusedStaticAssets
-    } = analyzeStaticAssetUsage(workspacePath);
+    } = findStaticVariableAssets(workspacePath);
 
     // 3. 직접 참조 중 미사용 정적 변수와 중복되는 것 제외
     const trulyDirectlyUsedAssets = [...directlyUsedAssets].filter(
@@ -71,7 +71,7 @@ function getUsedAssets(workspacePath: string, allAssets: string[]): Set<string> 
  * @param workspacePath 프로젝트 루트 경로
  * @returns 사용/미사용 정적 변수 에셋 경로
  */
-function analyzeStaticAssetUsage(workspacePath: string) {
+function findStaticVariableAssets(workspacePath: string) {
     // 1. 정적 변수로 정의된 에셋 참조 찾기
     const staticReferences = findStaticAssetReferences(workspacePath);
 
