@@ -1,5 +1,5 @@
 import { findPubspecAssets } from './finder/pubspec_asset_finder';
-import { findUsedAssets } from './finder/used_asset_finder';
+import { findAssetsInStringLiterals } from './finder/string_referenced_asset_finder';
 import { findStaticAssetReferences } from './finder/static_asset_reference_finder';
 import { findStaticAssetVariables } from './finder/static_asset_variable_finder';
 
@@ -45,7 +45,7 @@ export function analyzeAssetUsage(workspacePath: string): AssetAnalyzeResult {
  */
 function getUsedAssets(workspacePath: string, allAssets: string[]): Set<string> {
     // 1. 직접 참조 분석 (예: Image.asset('assets/images/logo.png'))
-    const directlyUsedAssets = findUsedAssets(workspacePath, allAssets);
+    const directlyUsedAssets = findAssetsInStringLiterals(workspacePath, allAssets);
 
     // 2. 정적 변수 참조 분석
     const {
