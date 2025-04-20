@@ -4,7 +4,7 @@ import * as yaml from 'yaml';
 import { collectFiles } from '../../utils/file_utils';
 
 /**
- * pubspec.yaml 에 정의된 모든 asset 들을 추출한다.
+ * pubspec.yaml 에 정의된 모든 asset 들의 상대 경로를 추출한다.
  * 
  * @example
  * // workspacePath: "/Users/project"
@@ -19,7 +19,6 @@ import { collectFiles } from '../../utils/file_utils';
  */
 export function findPubspecAssets(workspacePath: string): string[] {
   // pubspec.yaml 전체 경로 생성
-  // 예: "/Users/project/pubspec.yaml"
   const pubspecPath = path.join(workspacePath, 'pubspec.yaml');
 
   if (!fs.existsSync(pubspecPath)) {
@@ -28,7 +27,6 @@ export function findPubspecAssets(workspacePath: string): string[] {
   }
 
   // YAML 파일 읽기 및 파싱
-  // doc.flutter.assets 예시: ['assets/images/', 'assets/logo.png']
   const content = fs.readFileSync(pubspecPath, 'utf8');
   const doc = yaml.parse(content);
 
@@ -36,7 +34,8 @@ export function findPubspecAssets(workspacePath: string): string[] {
     return [];
   }
 
-  const assets: string[] = [];
+  // 모든 절대 경로를 수집
+  const absolutePaths: string[] = [];
 
   for (const asset of doc.flutter.assets) {
     if (typeof asset !== 'string') {
@@ -44,8 +43,6 @@ export function findPubspecAssets(workspacePath: string): string[] {
     }
 
     // asset의 전체 경로 생성
-    // 예1: "/Users/project/assets/images/"      (디렉토리)
-    // 예2: "/Users/project/assets/logo.png"     (파일)
     const assetPath = path.join(workspacePath, asset);
 
     if (!fs.existsSync(assetPath)) {
@@ -56,34 +53,17 @@ export function findPubspecAssets(workspacePath: string): string[] {
     const stat = fs.statSync(assetPath);
 
     if (stat.isDirectory()) {
-      // 디렉토리인 경우 모든 하위 파일 수집
-      // files: [
-      //   "/Users/project/assets/images/photo1.png",
-      //   "/Users/project/assets/images/photo2.png"
-      // ]
+      // 디렉토리인 경우 모든 하위 파일의 절대 경로 수집
       const files = collectFiles(assetPath);
-
-      // 절대 경로를 상대 경로로 변환 (Flutter 스타일)
-      // relativeFiles: [
-      //   "assets/images/photo1.png",
-      //   "assets/images/photo2.png"
-      // ]
-      const relativeFiles = files.map(file =>
-        path.relative(workspacePath, file).replace(/\\/g, '/')
-      );
-      assets.push(...relativeFiles);
+      absolutePaths.push(...files);
     } else {
-      // 단일 파일인 경우 상대 경로로 변환
-      // relative: "assets/logo.png"
-      const relative = path.relative(workspacePath, assetPath).replace(/\\/g, '/');
-      assets.push(relative);
+      // 단일 파일인 경우 절대 경로 추가
+      absolutePaths.push(assetPath);
     }
   }
 
-  // 최종 반환값: [
-  //   "assets/images/photo1.png",
-  //   "assets/images/photo2.png",
-  //   "assets/logo.png"
-  // ]
-  return assets;
+  // 절대 경로를 상대 경로로 변환하여 반환
+  return absolutePaths.map(absPath =>
+    path.relative(workspacePath, absPath).replace(/\\/g, '/')
+  );
 }
