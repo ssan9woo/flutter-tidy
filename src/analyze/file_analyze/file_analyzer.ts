@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { collectDartFiles } from '../utils/file_utils';
+import { collectDartFiles } from '../../utils/file_utils';
 import { findImportedFiles } from './finder/imported_file_finder';
 
 /**

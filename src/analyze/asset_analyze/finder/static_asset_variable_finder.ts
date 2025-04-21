@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { StaticAssetReference } from './static_asset_reference_finder';
-import { collectDartFiles } from '../../utils/file_utils';
+import { collectDartFiles } from '../../../utils/file_utils';
 
 /**
  * 정적 에셋 참조가 실제로 다른 파일에서 사용되는지 확인한다.

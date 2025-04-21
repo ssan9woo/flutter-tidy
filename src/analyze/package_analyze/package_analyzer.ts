@@ -2,7 +2,7 @@ import { findPubspecDependencies } from "./finder/pubspec_dependency_finder";
 import { findUsedDependencies } from "./finder/used_dependency_finder";
 import { findGenericDependencyUsage } from "./finder/generic_dependency_usage_finder";
 import { findDevDependencyUsage } from "./finder/dev_dependency_usage_finder";
-import { DependencyAnalysis, PackageAnalyzeResult } from "./models/dependency_models";
+import { PackageAnalyzeResult } from "./models/dependency_models";
 
 /**
  * 프로젝트 내의 모든 패키지 의존성 사용 현황을 분석합니다.

@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { collectDartFiles } from '../../utils/file_utils';
+import { collectDartFiles } from '../../../utils/file_utils';
 
 /**
  * Codebase 내에서 직접 사용된 asset 들을 찾는다.

@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'yaml';
-import { collectFiles } from '../../utils/file_utils';
+import { collectFiles } from '../../../utils/file_utils';
 
 /**
  * pubspec.yaml 에 정의된 모든 asset 들의 상대 경로를 추출한다.

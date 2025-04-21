@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { collectDartFiles } from '../../utils/file_utils';
+import { collectDartFiles } from '../../../utils/file_utils';
 
 /**
  * Dart 클래스 내의 정적 에셋 참조 정보

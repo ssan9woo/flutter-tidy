@@ -1,16 +1,24 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { FileAnalyzeResult } from './file_analyzer';
+import { FileAnalyzeResult } from '../analyze/file_analyze/file_analyzer';
 
 /**
  * 파일 분석 결과를 출력 채널에 표시합니다.
  * 
  * @param workspacePath 프로젝트 루트 경로
  * @param result 파일 분석 결과
+ * @param outputChannel 기존 출력 채널 (선택적, 없으면 새로 생성)
+ * @returns 사용된 출력 채널
  */
-export function displayFileAnalyzeResult(workspacePath: string, result: FileAnalyzeResult): void {
-    const outputChannel = vscode.window.createOutputChannel('Flutter Tidy: Unused Files');
-    outputChannel.clear();
+export function displayFileAnalyzeResult(
+    workspacePath: string,
+    result: FileAnalyzeResult,
+    outputChannel?: vscode.OutputChannel
+): vscode.OutputChannel {
+    // 출력 채널이 제공되지 않은 경우 새로 생성
+    if (!outputChannel) {
+        outputChannel = vscode.window.createOutputChannel('Flutter Tidy');
+    }
 
     const { allFiles, importedFiles, unusedFiles } = result;
 
@@ -42,5 +50,5 @@ export function displayFileAnalyzeResult(workspacePath: string, result: FileAnal
         outputChannel.appendLine(`✅ All Dart files in lib/ are properly referenced!`);
     }
 
-    outputChannel.show();
+    return outputChannel;
 } 

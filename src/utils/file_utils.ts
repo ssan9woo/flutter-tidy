@@ -1,11 +1,26 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import * as vscode from 'vscode';
 
 interface CollectFilesOptions {
     /** 수집할 파일의 확장자 (예: '.dart', '.ts') */
     extension?: string;
     /** 제외할 디렉토리 이름 목록 */
     excludeDirectories?: string[];
+}
+
+/**
+ * 현재 워크스페이스의 루트 경로를 가져옵니다.
+ * 
+ * @returns 워크스페이스 경로 또는 undefined (오류 발생 시)
+ */
+export function getWorkspacePath(): string | undefined {
+    const workspacePath = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
+    if (!workspacePath) {
+        vscode.window.showErrorMessage('No workspace folder found!');
+        return undefined;
+    }
+    return workspacePath;
 }
 
 /**

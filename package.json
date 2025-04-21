@@ -13,20 +13,20 @@
   "contributes": {
     "commands": [
       {
-        "command": "flutter-tidy.find-unused-assets",
-        "title": "Flutter Tidy: Find Unused Assets"
+        "command": "flutter-tidy.analyze-unused",
+        "title": "Flutter Tidy: Analyze All"
       },
       {
-        "command": "flutter-tidy.find-unused-classes",
-        "title": "Flutter Tidy: Find Unused Classes"
+        "command": "flutter-tidy.analyze-unused-assets",
+        "title": "Flutter Tidy: Analyze Unused Assets"
       },
       {
-        "command": "flutter-tidy.find-unused-dependencies",
-        "title": "Flutter Tidy: Find Unused Dependencies"
+        "command": "flutter-tidy.analyze-unused-dependencies",
+        "title": "Flutter Tidy: Analyze Unused Dependencies"
       },
       {
-        "command": "flutter-tidy.find-unused-files",
-        "title": "Flutter Tidy: Find Unused Files"
+        "command": "flutter-tidy.analyze-unused-files",
+        "title": "Flutter Tidy: Analyze Unused Files"
       }
     ]
   },

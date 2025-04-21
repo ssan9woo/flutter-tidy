@@ -1,15 +1,22 @@
 import * as vscode from 'vscode';
-import { PackageAnalyzeResult } from './models/dependency_models';
+import { PackageAnalyzeResult } from '../analyze/package_analyze/models/dependency_models';
 
 /**
  * 패키지 의존성 분석 결과를 출력 채널에 표시합니다.
  * 
  * @param workspacePath 프로젝트 루트 경로
  * @param result 패키지 의존성 분석 결과
+ * @param outputChannel 기존 출력 채널 (선택적, 없으면 새로 생성)
+ * @returns 사용된 출력 채널
  */
-export function displayPackageAnalyzeResult(workspacePath: string, result: PackageAnalyzeResult): void {
-    const outputChannel = vscode.window.createOutputChannel('Flutter Tidy: Unused Dependencies');
-    outputChannel.clear();
+export function displayPackageAnalyzeResult(
+    result: PackageAnalyzeResult,
+    outputChannel?: vscode.OutputChannel
+): vscode.OutputChannel {
+    // 출력 채널이 제공되지 않은 경우 새로 생성
+    if (!outputChannel) {
+        outputChannel = vscode.window.createOutputChannel('Flutter Tidy');
+    }
 
     const { generic, dev } = result;
 
@@ -65,5 +72,5 @@ export function displayPackageAnalyzeResult(workspacePath: string, result: Packa
     outputChannel.appendLine(`- Some dev dependencies like build_runner or code generators may not be`);
     outputChannel.appendLine(`  directly imported but are still necessary for your project.`);
 
-    outputChannel.show();
+    return outputChannel;
 } 

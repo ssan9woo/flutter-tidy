@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { collectDartFiles, collectFilesByExtension } from '../../utils/file_utils';
+import { collectDartFiles, collectFilesByExtension } from '../../../utils/file_utils';
 
 /**
  * 프로젝트 소스 코드에서 사용중인 패키지 의존성을 찾습니다.
