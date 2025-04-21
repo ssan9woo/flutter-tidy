@@ -24,17 +24,6 @@ suite('Dependency Analyzer Tests', () => {
     test('Should detect unused dependencies correctly', async () => {
         const result = await analyzePackageUsage(tempDir);
 
-        // 디버깅을 위한 로그 추가
-        console.log('===== DEBUG: Dependency Analyzer Test =====');
-        console.log('Temp Directory:', tempDir);
-        console.log('All Dependencies:', result.generic.all);
-        console.log('All Dependencies Count:', result.generic.all.length);
-        console.log('Used Dependencies:', [...result.generic.used]);
-        console.log('Used Dependencies Count:', result.generic.used.size);
-        console.log('Unused Dependencies:', result.generic.unused);
-        console.log('Unused Dependencies Count:', result.generic.unused.length);
-        console.log('===== END DEBUG =====');
-
         // 모든 의존성 패키지가 정확히 수집되었는지 확인
         assert.strictEqual(result.generic.all.length, 5);
 

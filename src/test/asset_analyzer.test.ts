@@ -24,17 +24,6 @@ suite('Asset Analyzer Tests', () => {
     test('Should detect unused assets correctly', async () => {
         const result = await analyzeAssetUsage(tempDir);
 
-        // 디버깅을 위한 로그 추가
-        console.log('===== DEBUG: Asset Analyzer Test =====');
-        console.log('Temp Directory:', tempDir);
-        console.log('All Assets:', result.allAssets);
-        console.log('All Assets Count:', result.allAssets.length);
-        console.log('Used Assets:', [...result.usedAssets]);
-        console.log('Used Assets Count:', result.usedAssets.size);
-        console.log('Unused Assets:', result.unusedAssets);
-        console.log('Unused Assets Count:', result.unusedAssets.length);
-        console.log('===== END DEBUG =====');
-
         // 중복을 제거한 고유 에셋 수 확인
         const uniqueAssets = new Set(result.allAssets);
         assert.strictEqual(uniqueAssets.size, 5);
@@ -54,11 +43,6 @@ suite('Asset Analyzer Tests', () => {
         const result = await analyzeAssetUsage(tempDir);
 
         // 다양한 문자열 포맷으로 참조된 에셋이 정확히 식별되는지 확인
-
-        // 디버깅을 위한 로그 추가
-        console.log('===== DEBUG: Asset Reference Test =====');
-        console.log('Used Assets:', [...result.usedAssets]);
-        console.log('===== END DEBUG =====');
 
         // 상대 경로 기반 검사
         assert.ok([...result.usedAssets].some(p => p.includes('images/used_image1.png'))); // 단일 따옴표로 참조
