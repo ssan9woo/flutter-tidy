@@ -10,7 +10,7 @@
     "url": "https://github.com/ssan9woo/flutter-tidy"
   },
   "engines": {
-    "vscode": "^1.80.0"
+    "vscode": "^1.99.0"
   },
   "categories": [
     "Programming Languages",
@@ -63,7 +63,9 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
     "test": "vscode-test",
-    "test:analyzer": "vscode-test ./src/test/file_analyzer.test.js ./src/test/asset_analyzer.test.js ./src/test/dependency_analyzer.test.js"
+    "test:analyzer": "vscode-test ./src/test/file_analyzer.test.js ./src/test/asset_analyzer.test.js ./src/test/dependency_analyzer.test.js",
+    "vscode:package": "vsce package",
+    "vscode:publish": "vsce publish"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
@@ -73,6 +75,7 @@
     "@typescript-eslint/parser": "^8.28.0",
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.1",
+    "@vscode/vsce": "^3.3.2",
     "esbuild": "^0.25.1",
     "eslint": "^9.23.0",
     "npm-run-all": "^4.1.5",
