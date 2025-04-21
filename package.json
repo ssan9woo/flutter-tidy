@@ -1,14 +1,34 @@
 {
   "name": "flutter-tidy",
-  "displayName": "flutter-tidy",
-  "description": "Tidy unused Assets, Classes, Dependencies",
+  "displayName": "Flutter Tidy",
+  "description": "Analyze and clean up unused assets, dependencies, and files in your Flutter project",
   "version": "0.0.1",
+  "publisher": "ssan9woo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ssan9woo/flutter-tidy"
+  },
   "engines": {
-    "vscode": "^1.99.0"
+    "vscode": "^1.80.0"
   },
   "categories": [
+    "Programming Languages",
+    "Linters",
+    "Formatters",
     "Other"
   ],
+  "keywords": [
+    "flutter",
+    "dart",
+    "cleanup",
+    "unused",
+    "assets",
+    "dependencies",
+    "analyzer",
+    "optimization"
+  ],
+  "icon": "icon.png",
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [

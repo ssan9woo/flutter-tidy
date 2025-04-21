@@ -1,20 +1,54 @@
-# flutter-tidy README
+# Flutter Tidy
 
-This is the README for your extension "flutter-tidy". After writing up a brief description, we recommend including the following sections.
+Flutter Tidy is a VSCode extension that helps you maintain a clean Flutter project by identifying and removing unused resources.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+### 1. Unused Assets Detection
+- Scans your project for unused image files, icons, and other assets
+- Identifies assets defined in `pubspec.yaml` but not referenced in code
+- Helps reduce app size by removing unnecessary resources
 
-For example if there is an image subfolder under your extension project workspace:
+### 2. Unused Dependencies Detection
+- Analyzes `pubspec.yaml` to find unused package dependencies
+- Helps maintain a lean dependency tree
+- Improves build time by removing unnecessary packages
 
-\!\[feature X\]\(images/feature-x.png\)
+### 3. Unused Files Detection
+- Identifies Dart files that are not referenced anywhere in your project
+- Considers various Dart file relationships:
+  - Import statements
+  - Export statements
+  - Part/Part of relationships
+  - Library declarations
+- Helps keep your codebase clean and maintainable
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Usage
+
+1. Open your Flutter project in VSCode
+2. Open the Command Palette (Ctrl+Shift+P / Cmd+Shift+P)
+3. Type "Flutter Tidy" to see available commands:
+   - `Flutter Tidy: Analyze Unused Assets`
+   - `Flutter Tidy: Analyze Unused Dependencies`
+   - `Flutter Tidy: Analyze Unused Files`
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- Visual Studio Code version 1.99.0 or higher
+- Flutter project with a valid `pubspec.yaml` file
+
+## Known Issues
+
+Please report any issues on our [GitHub repository](https://github.com/ssan9woo/flutter-tidy/issues).
+
+## Release Notes
+
+### 0.0.1
+
+Initial release of Flutter Tidy with core features:
+- Unused assets detection
+- Unused dependencies detection
+- Unused files detection
 
 ## Extension Settings
 
@@ -26,28 +60,6 @@ This extension contributes the following settings:
 
 * `myExtension.enable`: Enable/disable this extension.
 * `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
 
 ## Following extension guidelines
 
