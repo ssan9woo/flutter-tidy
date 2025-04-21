@@ -2,15 +2,7 @@ import { findPubspecAssets } from './finder/pubspec_asset_finder';
 import { findAssetsInStringLiterals } from './finder/string_referenced_asset_finder';
 import { findStaticAssetReferences } from './finder/static_asset_reference_finder';
 import { findStaticAssetVariables } from './finder/static_asset_variable_finder';
-
-/**
- * 에셋 분석 결과를 나타내는 인터페이스
- */
-export interface AssetAnalyzeResult {
-    allAssets: string[];
-    usedAssets: Set<string>;
-    unusedAssets: string[];
-}
+import { AssetAnalyzeResult, StaticAssetResult } from './models/asset_analyze_models';
 
 /**
  * 프로젝트 내의 모든 에셋 사용 현황을 분석합니다.
@@ -71,7 +63,7 @@ function findUsedAssets(workspacePath: string, allAssets: string[]): Set<string>
  * @param workspacePath 프로젝트 루트 경로
  * @returns 사용/미사용 정적 변수 에셋 경로
  */
-function findStaticVariableAssets(workspacePath: string) {
+function findStaticVariableAssets(workspacePath: string): StaticAssetResult {
     // 1. 정적 변수로 정의된 에셋 참조 찾기
     const staticReferences = findStaticAssetReferences(workspacePath);
 

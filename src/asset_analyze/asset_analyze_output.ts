@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { AssetAnalyzeResult } from './asset_analyzer';
+import { AssetAnalyzeResult } from './models/asset_analyze_models';
 
 /**
  * 에셋 분석 결과를 출력 채널에 표시합니다.
