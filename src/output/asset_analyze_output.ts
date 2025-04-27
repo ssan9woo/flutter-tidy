@@ -25,7 +25,7 @@ export function displayAssetAnalyzeResult(
 
     outputChannel.appendLine(`📊 Assets Analysis Results`);
     outputChannel.appendLine(`- Total: ${allAssets.length}`);
-    outputChannel.appendLine(`- Used: ${usedAssets.size}`);
+    outputChannel.appendLine(`- Used: ${usedAssets.length}`);
     outputChannel.appendLine(`- Unused: ${unusedAssets.length}`);
     outputChannel.appendLine('');
 
