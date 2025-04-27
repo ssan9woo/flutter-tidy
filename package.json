@@ -2,7 +2,7 @@
   "name": "flutter-tidy",
   "displayName": "Flutter Tidy",
   "description": "Analyze and clean up unused assets, dependencies, and files in your Flutter project",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "publisher": "ssan9woo",
   "license": "MIT",
   "repository": {
