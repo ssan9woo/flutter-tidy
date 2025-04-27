@@ -54,6 +54,14 @@ Please report any issues on our [GitHub repository](https://github.com/ssan9woo/
 
 ## Release Notes
 
+### 0.0.4
+
+Improved Asset Analysis System:
+- Enhanced detection of assets used in both direct references and static variables
+- Fixed issues with false-positive unused asset detection
+- Improved performance with optimized file analysis
+- Better handling of various string literal formats in asset references
+
 ### 0.0.1
 
 Initial release of Flutter Tidy with core features:
