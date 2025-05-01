@@ -41,7 +41,7 @@ Flutter Tidy is a VSCode extension that helps you maintain a clean Flutter proje
 
 ## Requirements
 
-- Visual Studio Code version 1.99.0 or higher
+- Visual Studio Code version 1.80.0 or higher
 - Flutter project with a valid `pubspec.yaml` file
 
 <br>
